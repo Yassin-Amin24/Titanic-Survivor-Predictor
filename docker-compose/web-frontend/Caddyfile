@@ -1,0 +1,30 @@
+# Caddyfile for reverse proxy and static file serving
+{
+    auto_https off
+}
+
+:80 {
+    # Serve static files
+    root * /usr/share/caddy
+    
+    # API routes to web backend
+    reverse_proxy /api/* web-backend:8000
+    
+    # Fallback to index.html for SPA routing
+    try_files {path} /index.html
+    
+    # Enable file server
+    file_server
+    
+    # CORS headers
+    header {
+        Access-Control-Allow-Origin *
+        Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+        Access-Control-Allow-Headers "Content-Type, Authorization"
+    }
+    
+    # Handle preflight requests
+    @options method OPTIONS
+    respond @options 200
+}
+

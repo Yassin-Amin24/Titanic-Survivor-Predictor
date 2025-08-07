@@ -1,0 +1,59 @@
+
+services:
+  # Model Backend Service
+  model-backend:
+    build: ./model-backend
+    environment:
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - model_data:/app/models
+    ports:
+      - "5001:5001"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+
+  # Web Backend Service
+  web-backend:
+    build: ./web-backend
+    environment:
+      - PYTHONUNBUFFERED=1
+      #- MODEL_BACKEND_URL=http://model-backend:8001
+    depends_on:
+      - model-backend
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+
+  # Web Frontend Service (with Caddy reverse proxy)
+  web-frontend:
+    build: ./web-frontend
+    depends_on:
+      - web-backend
+    ports:
+      - "8080:80"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+
+#to persist data even when containers are restarted/rebuilt
+volumes:
+  model_data:
+    driver: local
+
+#shared bridge for services to interact together
+networks:
+  default:
+    driver: bridge
+

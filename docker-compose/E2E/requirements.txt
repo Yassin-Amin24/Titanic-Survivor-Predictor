@@ -1,0 +1,7 @@
+behave==1.2.6
+requests==2.31.0
+playwright==1.40.0
+pexpect==4.8.0
+pytest==7.4.3
+pytest-html==4.1.1
+allure-behave==2.13.2 

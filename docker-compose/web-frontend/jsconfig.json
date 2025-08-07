@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "baseUrl": "src",
+    "paths": {
+      "@/*": ["./*"]
+    },
+    "types": []
+  },
+  "typeAcquisition": {
+    "enable": true,
+    "include": []
+  },
+  "exclude": ["node_modules", "**/*.test.js"]
+}
