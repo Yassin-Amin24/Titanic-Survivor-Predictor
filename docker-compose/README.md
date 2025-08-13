@@ -16,13 +16,7 @@ git clone <your-repo-url>
 cd docker-compose
 ```
 
-### 2. Initialize Git submodules (if used)
-
-```bash
-git submodule update --init --recursive
-```
-
-### 3. Start all services
+### 2. Start all services
 
 ```bash
 docker-compose up --build
@@ -30,7 +24,7 @@ docker-compose up --build
 
 > This will build and start all containers (frontend, backend, model-backend, and database).
 
-### 4. Access the application
+### 3. Access the application
 
 Once running, the application is accessible at:
 
