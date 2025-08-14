@@ -207,7 +207,9 @@ const AdminPanel = () => {
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {models.map((model) => (
+                  {models.map((model) => {
+                    console.log('Rendering model:', model.name, 'is_default:', model.is_default);
+                    return (
                     <div key={model.id} className="flex items-center justify-between p-4 border rounded-lg">
                       <div className="flex-1">
                         <div className="flex items-center space-x-2 mb-1">
@@ -228,12 +230,14 @@ const AdminPanel = () => {
                           variant="destructive"
                           size="sm"
                           onClick={() => deleteModel(model.id)}
+                          className="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded"
                         >
                           <Trash2 className="h-4 w-4" />
+                          Delete
                         </Button>
                       )}
                     </div>
-                  ))}
+                  )})}
                 </div>
               </CardContent>
             </Card>
